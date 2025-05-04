@@ -19,12 +19,13 @@ jobs:
           fetch-depth: 0
 
       - name: Debug struttura del repo
-        run: >
-          pwd &&
-          ls -la &&
-          echo "---" &&
-          ls -la roman-number || echo "roman-number non trovata" &&
-          echo "---" &&
+        run: |
+          echo "Verifica struttura del repo"
+          pwd
+          ls -la
+          echo "---"
+          if [ -d "roman-number" ]; then ls -la roman-number; else echo "Cartella roman-number non trovata"; fi
+          echo "---"
           find . -name "pom.xml" || echo "pom.xml non trovato"
 
       - name: Set up JDK 1.8
