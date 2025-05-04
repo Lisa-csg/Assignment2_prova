@@ -2,41 +2,30 @@ name: Java CI with Maven
 
 on:
   push:
-    branches:
-      - develop
+    branches: [ main, develop ]
   pull_request:
-    branches:
-      - develop
+    branches: [ main, develop ]
 
 jobs:
   build:
     runs-on: ubuntu-latest
-    
+
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
-        with:
-          fetch-depth: 0
 
-      - name: Debug struttura del repo
-        run: |
-          echo "Verifica struttura del repo"
-          pwd
-          ls -la
-          echo "---"
-          if [ -d "roman-number" ]; then ls -la roman-number; else echo "Cartella roman-number non trovata"; fi
-          echo "---"
-          find . -name "pom.xml" || echo "pom.xml non trovato"
-
-      - name: Set up JDK 1.8 
+      - name: Set up JDK 1.8
         uses: actions/setup-java@v3
         with:
           java-version: '8.0.412+8'
           distribution: 'temurin'
           cache: maven
 
-      - name: Build & Test with Coverage
-        run: mvn clean verify -f roman-number/pom.xml
+      - name: Build, Test, Checkstyle
+        run: mvn clean verify checkstyle:check -f roman-number/pom.xml
+
+      - name: Generate JaCoCo Report
+        run: mvn jacoco:report -f roman-number/pom.xml
 
       - name: Report to Coveralls
         env:
