@@ -13,18 +13,18 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout repository (senza ref)
+      - name: Checkout repository
         uses: actions/checkout@v3
         with:
           fetch-depth: 0
 
-      - name:Debug:verifica struttura del repo
-        run: |
-          pwd
-          ls -la
-          echo "---"
-          ls -la roman-number || echo "roman-number non trovata"
-          echo "---"
+      - name: Debug struttura del repo
+        run: >
+          pwd &&
+          ls -la &&
+          echo "---" &&
+          ls -la roman-number || echo "roman-number non trovata" &&
+          echo "---" &&
           find . -name "pom.xml" || echo "pom.xml non trovato"
 
       - name: Set up JDK 1.8
