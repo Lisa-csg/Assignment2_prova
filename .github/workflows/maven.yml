@@ -18,7 +18,7 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Debug: verifica struttura del repo
+      - name:Debug:verifica struttura del repo
         run: |
           pwd
           ls -la
